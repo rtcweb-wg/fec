@@ -18,6 +18,6 @@ script: make all #upload
 
 env:
  global:
- - GH_REF: github.com/juberti/draughts.git
+ - GH_REF: github.com/rtcweb-wg/fec.git
  - secure: "Dyu6BRI5Gyidgnshtz4qNvDtXfGLhsoOH9KIyGpk+3RgDYpE2t0uL2D1oWAr7oNbgzHuBpEkd4HaSigs0Yu5UgmQXvhwjBO/ChrleX9g4lVx7qjkOGEz94o6B/FI/ygqmQ819V4CyldZkSYyAJSaL0/OanwuKZ6CejKpCyJYJeo="
 
