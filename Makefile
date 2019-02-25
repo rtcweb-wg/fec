@@ -1,7 +1,6 @@
 
 
-SRC  := $(wildcard ip-handling/draft-*.xml) $(wildcard fec/draft-*.xml)  
-#SRC  := $(wildcard draft-*.xml)
+SRC  := $(wildcard draft-*.xml)  
 WSRC  := $(wildcard *.wsd)
 
 HTML := $(patsubst %.xml,%.html,$(SRC))
