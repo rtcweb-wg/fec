@@ -56,25 +56,26 @@
 
       <t>FEC describes the sending of redundant information in an outgoing
       packet stream so that information can still be recovered even in the face
-      of packet loss. There are multiple ways in which this can be
-      accomplished; this section enumerates the various mechanisms and
-      describes their tradeoffs.</t>
+      of packet loss. There are multiple ways this can be accomplished
+      for RTP media streams <xref target="RFC3550" />; this section enumerates
+      the various mechanisms available and describes their tradeoffs.</t>
       <section title="Separate FEC Stream">
 
-        <t>This approach, as described in
-        <xref target="RFC5956" />, Section 4.3, sends FEC packets as an
-        independent SSRC-multiplexed stream, with its own SSRC and payload
-        type. While this approach can protect multiple packets of the primary
-        encoding with a single FEC packet, each FEC packet will have its own
-        IP+UDP+RTP+FEC header, and this overhead can be excessive in some
+        <t>This approach, as described in <xref target="RFC5956" />,
+        Section 4.3, sends FEC packets as an independent RTP stream with its own
+        synchronization source (SSRC, <xref target="RFC3550"/>) and payload
+        type, multiplexed with the primary encoding. While this approach can
+        protect multiple packets of the
+        primary encoding with a single FEC packet, each FEC packet will have its
+        own IP+UDP+RTP+FEC header, and this overhead can be excessive in some
         cases, e.g., when protecting each primary packet with a FEC packet.</t>
 
         <t>This approach allows for recovery of entire RTP packets, including
         the full RTP header.</t>
       </section>
-      <section title="Redundant Encoding">
+      <section title="Redundant Encoding" anchor="redundant-encoding">
 
-        <t>This approach, as descibed in
+        <t>This approach, as described in
         <xref target="RFC2198" />, allows for redundant data to be piggybacked
         on an existing primary encoding, all in a single packet. This redundant
         data may be an exact copy of a previous packet, or for codecs that
@@ -113,8 +114,7 @@
 
         <t>For AMR/AMR-WB, packets can contain copies or lower-quality
         encodings of multiple prior audio frames. This mechanism is similar to
-        the
-        <xref target="RFC2198" /> mechanism described above, but as it adds no
+        the redundant encoding mechanism described above, but as it adds no
         additional framing, it can be slightly more efficient. See
         <xref target="RFC4867" />, Section 3.7.1 for details on this
         mechanism.</t>
@@ -131,7 +131,9 @@
       <section title="Recommended Mechanism">
 
         <t>When using variable-bitrate codecs without an internal FEC,
-        <xref target="RFC2198" /> redundant encoding with lower-fidelity
+        redundant encoding
+        (as described in <xref target="redundant-encoding" />)
+        with lower-fidelity
         version(s) of the previous packet(s) is RECOMMENDED. This provides
         reasonable protection of the payload with only moderate bitrate
         increase, as the redundant encodings can be significantly smaller than
@@ -142,18 +144,17 @@
         against individual losses, with minimal overhead. Note that, as
         indicated above, the built-in Opus FEC only provides single-frame
         redundancy; if multi-packet protection is needed, the aforementioned
-        <xref target="RFC2198" /> redundancy with reduced-bitrate Opus encodings
+        redundant encoding with reduced-bitrate Opus encodings
         SHOULD be used instead.</t>
 
         <t>When using the AMR/AMR-WB codecs, use of their built-in FEC
         mechanism is RECOMMENDED. This provides slightly more efficient
-        protection of the audio stream than
-        <xref target="RFC2198" />.</t>
+        protection of the audio stream than redundant encoding.</t>
 
-        <t>When using constant-bitrate codecs, e.g. PCMU, use of
-        <xref target="RFC2198" /> redundant encoding MAY be used, but note that
+        <t>When using constant-bitrate codecs, e.g.,
+        PCMU <xref target="RFC5391"/>, redundant encoding MAY be used, but
         this will result in a potentially significant bitrate increase, and
-        that suddenly increasing bitrate to deal with losses from congestion
+        suddenly increasing bitrate to deal with losses from congestion
         may actually make things worse.</t>
 
         <t>Because of the lower packet rate of audio encodings, usually a
@@ -373,6 +374,7 @@
       <?rfc include='reference.RFC.3711.xml'?>
       <?rfc include='reference.RFC.4588.xml'?>
       <?rfc include='reference.RFC.5109.xml'?>
+      <?rfc include='reference.RFC.5391.xml'?>
       <?rfc include='reference.RFC.5763.xml'?>
       <?rfc include='reference.RFC.5764.xml'?>
       <?rfc include='reference.RFC.6386.xml'?>
