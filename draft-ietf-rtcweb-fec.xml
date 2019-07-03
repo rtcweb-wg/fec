@@ -108,8 +108,9 @@
         this mechanism can only carry redundancy information for the
         immediately preceding packet; as such the decoder cannot fully recover
         multiple consecutive lost packets, which can be a problem on wireless
-        networks. See
-        <xref target="RFC6716" />, Section 2.1.7 for complete details.</t>
+        networks. See <xref target="RFC6716" />, Section 2.1.7, and
+        <xref target="OpusFEC">this Opus mailing list post</xref> for more
+        details.</t>
 
         <t>For AMR/AMR-WB, packets can contain copies or lower-quality
         encodings of multiple prior audio frames. This mechanism is similar to
@@ -381,6 +382,17 @@
       <?rfc include='reference.RFC.6716.xml'?>
       <?rfc include='reference.I-D.ietf-mmusic-sdp-bundle-negotiation'?>
       <?rfc include='reference.I-D.ietf-rtcweb-data-channel'?>
+      <reference anchor="OpusFEC">
+        <front>
+          <title>Opus FEC></title>
+          <author fullname="Tim Terriberry">
+            <organization>Xiph</organization>
+          </author>
+          <date date="28" month="January" year="2013" />
+        </front>
+        <format
+        target="http://lists.xiph.org/pipermail/opus/2013-January/001904.html">
+      </reference>
     </references>
     <section title="Change log">
        <t>Changes in draft -09:
