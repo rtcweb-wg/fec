@@ -397,15 +397,10 @@
       </reference>
     </references>
     <section title="Change log">
-      <t>Changes in draft -10:
+      <t>Changes in draft -09:
       <list style="symbols">
         <t>Editorial changes from IETF LC.</t>
         <t>Added new reference for Opus FEC.</t>
-      </list></t>
-
-      <t>Changes in draft -09:
-      <list style="symbols">
-        <t>Editorial changes.</t>
       </list></t>
 
        <t>Changes in draft -08:
