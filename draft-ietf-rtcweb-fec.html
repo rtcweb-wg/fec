@@ -1,0 +1,815 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>WebRTC Forward Error Correction Requirements</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents">
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
+<link href="#rfc.section.2" rel="Chapter" title="2 Terminology">
+<link href="#rfc.section.3" rel="Chapter" title="3 Types of FEC">
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Separate FEC Stream">
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Redundant Encoding">
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Codec-Specific In-band FEC">
+<link href="#rfc.section.4" rel="Chapter" title="4 FEC for Audio Content">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Recommended Mechanism">
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Negotiating Support">
+<link href="#rfc.section.5" rel="Chapter" title="5 FEC for Video Content">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Recommended Mechanism">
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Negotiating Support">
+<link href="#rfc.section.6" rel="Chapter" title="6 FEC for Application Content">
+<link href="#rfc.section.7" rel="Chapter" title="7 Implementation Requirements">
+<link href="#rfc.section.8" rel="Chapter" title="8 Adaptive Use of FEC">
+<link href="#rfc.section.9" rel="Chapter" title="9 Security Considerations">
+<link href="#rfc.section.10" rel="Chapter" title="10 IANA Considerations">
+<link href="#rfc.section.11" rel="Chapter" title="11 Acknowledgements">
+<link href="#rfc.references" rel="Chapter" title="12 References">
+<link href="#rfc.references.1" rel="Chapter" title="12.1 Normative References">
+<link href="#rfc.references.2" rel="Chapter" title="12.2 Informative References">
+<link href="#rfc.appendix.A" rel="Chapter" title="A Change log">
+<link href="#rfc.authors" rel="Chapter">
+
+
+  <meta name="generator" content="xml2rfc version 2.11.1 - https://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Uberti, J." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-rtcweb-fec-10" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-03" />
+  <meta name="dct.abstract" content="This document provides information and requirements for how Forward Error Correction (FEC) should be used by WebRTC implementations." />
+  <meta name="description" content="This document provides information and requirements for how Forward Error Correction (FEC) should be used by WebRTC implementations." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+<td class="left">Network Working Group</td>
+<td class="right">J. Uberti</td>
+</tr>
+<tr>
+<td class="left">Internet-Draft</td>
+<td class="right">Google</td>
+</tr>
+<tr>
+<td class="left">Intended status: Standards Track</td>
+<td class="right">Jul 3, 2019</td>
+</tr>
+<tr>
+<td class="left">Expires: January 4, 2020</td>
+<td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">WebRTC Forward Error Correction Requirements<br />
+  <span class="filename">draft-ietf-rtcweb-fec-10</span></p>
+  
+  <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+<p>This document provides information and requirements for how Forward Error Correction (FEC) should be used by WebRTC implementations.</p>
+<h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on January 4, 2020.</p>
+<h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+<p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a>
+</li>
+<li>2.   <a href="#rfc.section.2">Terminology</a>
+</li>
+<li>3.   <a href="#rfc.section.3">Types of FEC</a>
+</li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Separate FEC Stream</a>
+</li>
+<li>3.2.   <a href="#rfc.section.3.2">Redundant Encoding</a>
+</li>
+<li>3.3.   <a href="#rfc.section.3.3">Codec-Specific In-band FEC</a>
+</li>
+</ul><li>4.   <a href="#rfc.section.4">FEC for Audio Content</a>
+</li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Recommended Mechanism</a>
+</li>
+<li>4.2.   <a href="#rfc.section.4.2">Negotiating Support</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">FEC for Video Content</a>
+</li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Recommended Mechanism</a>
+</li>
+<li>5.2.   <a href="#rfc.section.5.2">Negotiating Support</a>
+</li>
+</ul><li>6.   <a href="#rfc.section.6">FEC for Application Content</a>
+</li>
+<li>7.   <a href="#rfc.section.7">Implementation Requirements</a>
+</li>
+<li>8.   <a href="#rfc.section.8">Adaptive Use of FEC</a>
+</li>
+<li>9.   <a href="#rfc.section.9">Security Considerations</a>
+</li>
+<li>10.   <a href="#rfc.section.10">IANA Considerations</a>
+</li>
+<li>11.   <a href="#rfc.section.11">Acknowledgements</a>
+</li>
+<li>12.   <a href="#rfc.references">References</a>
+</li>
+<ul><li>12.1.   <a href="#rfc.references.1">Normative References</a>
+</li>
+<li>12.2.   <a href="#rfc.references.2">Informative References</a>
+</li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Change log</a>
+</li>
+<li><a href="#rfc.authors">Author's Address</a>
+</li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1">
+<a href="#rfc.section.1">1.</a> Introduction</h1>
+<p id="rfc.section.1.p.1">In situations where packet loss is high, or perfect media quality is essential, Forward Error Correction (FEC) can be used to proactively recover from packet losses. This specification provides guidance on which FEC mechanisms to use, and how to use them, for WebRTC implementations.</p>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> Terminology</h1>
+<p id="rfc.section.2.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <a href="#RFC2119" class="xref">[RFC2119]</a> <a href="#RFC8174" class="xref">[RFC8174]</a> when, and only when, they appear in all capitals, as shown here.</p>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> Types of FEC</h1>
+<p id="rfc.section.3.p.1">FEC describes the sending of redundant information in an outgoing packet stream so that information can still be recovered even in the face of packet loss. There are multiple ways this can be accomplished for RTP media streams <a href="#RFC3550" class="xref">[RFC3550]</a>; this section enumerates the various mechanisms available and describes their tradeoffs.</p>
+<h1 id="rfc.section.3.1">
+<a href="#rfc.section.3.1">3.1.</a> Separate FEC Stream</h1>
+<p id="rfc.section.3.1.p.1">This approach, as described in <a href="#RFC5956" class="xref">[RFC5956]</a>, Section 4.3, sends FEC packets as an independent RTP stream with its own synchronization source (SSRC, <a href="#RFC3550" class="xref">[RFC3550]</a>) and payload type, multiplexed with the primary encoding. While this approach can protect multiple packets of the primary encoding with a single FEC packet, each FEC packet will have its own IP+UDP+RTP+FEC header, and this overhead can be excessive in some cases, e.g., when protecting each primary packet with a FEC packet.</p>
+<p id="rfc.section.3.1.p.2">This approach allows for recovery of entire RTP packets, including the full RTP header.</p>
+<h1 id="rfc.section.3.2">
+<a href="#rfc.section.3.2">3.2.</a> <a href="#redundant-encoding" id="redundant-encoding">Redundant Encoding</a>
+</h1>
+<p id="rfc.section.3.2.p.1">This approach, as described in <a href="#RFC2198" class="xref">[RFC2198]</a>, allows for redundant data to be piggybacked on an existing primary encoding, all in a single packet. This redundant data may be an exact copy of a previous payload, or for codecs that support variable-bitrate encodings, possibly a smaller, lower-quality representation. In certain cases, the redundant data could include encodings of multiple prior audio frames.</p>
+<p id="rfc.section.3.2.p.2">Since there is only a single set of packet headers, this approach allows for a very efficient representation of primary + redundant data.  However, this savings is only realized when the data all fits into a single packet (i.e. the size is less than a MTU). As a result, this approach is generally not useful for video content.</p>
+<p id="rfc.section.3.2.p.3">As described in <a href="#RFC2198" class="xref">[RFC2198]</a>, Section 4, this approach cannot recover certain parts of the RTP header, including the marker bit, CSRC information, and header extensions.</p>
+<h1 id="rfc.section.3.3">
+<a href="#rfc.section.3.3">3.3.</a> Codec-Specific In-band FEC</h1>
+<p id="rfc.section.3.3.p.1">Some audio codecs, notably Opus <a href="#RFC6716" class="xref">[RFC6716]</a> and AMR <a href="#RFC4867" class="xref">[RFC4867]</a>, support their own in-band FEC mechanism, where redundant data is included in the codec payload. This is similar to the redundant encoding mechanism described above, but as it adds no additional framing, it can be slightly more efficient.</p>
+<p id="rfc.section.3.3.p.2">For Opus, audio frames deemed important are re-encoded at a lower bitrate and appended to the next payload, allowing partial recovery of a lost packet. This scheme is fairly efficient; experiments performed indicate that when Opus FEC is used, the overhead imposed is only about 20-30%, depending on the amount of protection needed. Note that this mechanism can only carry redundancy information for the immediately preceding audio frame; as such the decoder cannot fully recover multiple consecutive lost packets, which can be a problem on wireless networks. See <a href="#RFC6716" class="xref">[RFC6716]</a>, Section 2.1.7, and <a href="#OpusFEC" class="xref">this Opus mailing list post</a> for more details.</p>
+<p id="rfc.section.3.3.p.3">For AMR/AMR-WB, packets can contain copies or lower-quality encodings of multiple prior audio frames. See <a href="#RFC4867" class="xref">[RFC4867]</a>, Section 3.7.1 for details on this mechanism.</p>
+<p id="rfc.section.3.3.p.4">In-band FEC mechanisms cannot recover any of the RTP header.</p>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#audio-fec" id="audio-fec">FEC for Audio Content</a>
+</h1>
+<p id="rfc.section.4.p.1">The following section provides guidance on how to best use FEC for transmitting audio data. As indicated in <a href="#adaptive-fec" class="xref">Section 8</a> below, FEC should only be activated if network conditions warrant it, or upon explicit application request.</p>
+<h1 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> Recommended Mechanism</h1>
+<p id="rfc.section.4.1.p.1">When using variable-bitrate codecs without an internal FEC, redundant encoding (as described in <a href="#redundant-encoding" class="xref">Section 3.2</a>) with lower-fidelity version(s) of the previous packet(s) is RECOMMENDED. This provides reasonable protection of the payload with only moderate bitrate increase, as the redundant encodings can be significantly smaller than the primary encoding.</p>
+<p id="rfc.section.4.1.p.2">When using the Opus codec, use of the built-in Opus FEC mechanism is RECOMMENDED. This provides reasonable protection of the audio stream against individual losses, with minimal overhead. Note that, as indicated above, the built-in Opus FEC only provides single-frame redundancy; if multi-packet protection is needed, the aforementioned redundant encoding with reduced-bitrate Opus encodings SHOULD be used instead.</p>
+<p id="rfc.section.4.1.p.3">When using the AMR/AMR-WB codecs, use of their built-in FEC mechanism is RECOMMENDED. This provides slightly more efficient protection of the audio stream than redundant encoding.</p>
+<p id="rfc.section.4.1.p.4">When using constant-bitrate codecs, e.g., PCMU <a href="#RFC5391" class="xref">[RFC5391]</a>, redundant encoding MAY be used, but this will result in a potentially significant bitrate increase, and suddenly increasing bitrate to deal with losses from congestion may actually make things worse.</p>
+<p id="rfc.section.4.1.p.5">Because of the lower packet rate of audio encodings, usually a single packet per frame, use of a separate FEC stream comes with a higher overhead than other mechanisms, and therefore is NOT RECOMMENDED.</p>
+<p id="rfc.section.4.1.p.6">As mentioned above, the recommended mechanisms do not allow recovery of parts of the RTP header that may be important in certain audio applications, e.g., CSRCs and RTP header extensions like those specified in <a href="#RFC6464" class="xref">[RFC6464]</a> and <a href="#RFC6465" class="xref">[RFC6465]</a>. Implementations SHOULD account for this and attempt to approximate this information, using an approach similar to those described in <a href="#RFC2198" class="xref">[RFC2198]</a>, Section 4, and <a href="#RFC6464" class="xref">[RFC6464]</a>, Section 5.</p>
+<h1 id="rfc.section.4.2">
+<a href="#rfc.section.4.2">4.2.</a> Negotiating Support</h1>
+<p id="rfc.section.4.2.p.1">Support for redundant encoding of a given RTP stream SHOULD be indicated by including audio/red <a href="#RFC2198" class="xref">[RFC2198]</a> as an additional supported media type for the associated m= section in the SDP offer <a href="#RFC3264" class="xref">[RFC3264]</a>. Answerers can reject the use of redundant encoding by not including the audio/red media type in the corresponding m= section in the SDP answer.</p>
+<p id="rfc.section.4.2.p.2">Support for codec-specific FEC mechanisms are typically indicated via "a=fmtp" parameters.</p>
+<p id="rfc.section.4.2.p.3">For Opus, a receiver MUST indicate that it is prepared to use incoming FEC data with the "useinbandfec=1" parameter, as specified in <a href="#RFC7587" class="xref">[RFC7587]</a>. This parameter is declarative and can be negotiated separately for either media direction.</p>
+<p id="rfc.section.4.2.p.4">For AMR/AMR-WB, support for redundant encoding, and the maximum supported depth, are controlled by the 'max-red' parameter, as specified in <a href="#RFC4867" class="xref">[RFC4867]</a>, Section 8.1. Receivers MUST include this parameter, and set it to an appropriate value, as specified in <a href="#TS.26114" class="xref">[TS.26114]</a>, Table 6.3.</p>
+<h1 id="rfc.section.5">
+<a href="#rfc.section.5">5.</a> <a href="#video-fec" id="video-fec">FEC for Video Content</a>
+</h1>
+<p id="rfc.section.5.p.1">The following section provides guidance on how to best use FEC for transmitting video data. As indicated in <a href="#adaptive-fec" class="xref">Section 8</a> below, FEC should only be activated if network conditions warrant it, or upon explicit application request.</p>
+<h1 id="rfc.section.5.1">
+<a href="#rfc.section.5.1">5.1.</a> Recommended Mechanism</h1>
+<p id="rfc.section.5.1.p.1">Video frames, due to their size, often require multiple RTP packets.  As discussed above, a separate FEC stream can protect multiple packets with a single FEC packet. In addition, the "flexfec" FEC mechanism described in <a href="#I-D.ietf-payload-flexible-fec-scheme" class="xref">[I-D.ietf-payload-flexible-fec-scheme]</a> is also capable of protecting multiple RTP streams via a single FEC stream, including all the streams that are part of a BUNDLE <a href="#I-D.ietf-mmusic-sdp-bundle-negotiation" class="xref">[I-D.ietf-mmusic-sdp-bundle-negotiation]</a> group. As a result, for video content, use of a separate FEC stream with the flexfec RTP payload format is RECOMMENDED.</p>
+<p id="rfc.section.5.1.p.2">To process the incoming FEC stream, the receiver can demultiplex it by SSRC, and then correlate it with the appropriate primary stream(s) via the CSRC(s) present in the RTP header of flexfec repair packets, or the SSRC field present in the FEC header of flexfec retransmission packets.</p>
+<h1 id="rfc.section.5.2">
+<a href="#rfc.section.5.2">5.2.</a> Negotiating Support</h1>
+<p id="rfc.section.5.2.p.1">Support for a SSRC-multiplexed flexfec stream to protect a given RTP stream SHOULD be indicated by including one of the formats described in <a href="#I-D.ietf-payload-flexible-fec-scheme" class="xref">[I-D.ietf-payload-flexible-fec-scheme]</a>, Section 5.1.2, as an additional supported media type for the associated m= section in the SDP offer <a href="#RFC3264" class="xref">[RFC3264]</a>. As mentioned above, when BUNDLE is used, only a single flexfec repair stream will be created for each BUNDLE group, even if flexfec is negotiated for each primary stream.</p>
+<p id="rfc.section.5.2.p.2">Answerers can reject the use of SSRC-multiplexed FEC, by not including the offered FEC formats in the corresponding m= section in the SDP answer.</p>
+<p id="rfc.section.5.2.p.3">Use of FEC-only m-lines, and grouping using the SDP group mechanism as described in <a href="#RFC5956" class="xref">[RFC5956]</a>, Section 4.1 is not currently defined for WebRTC, and SHOULD NOT be offered.</p>
+<p id="rfc.section.5.2.p.4">Answerers SHOULD reject any FEC-only m-lines, unless they specifically know how to handle such a thing in a WebRTC context (perhaps defined by a future version of the WebRTC specifications).</p>
+<h1 id="rfc.section.6">
+<a href="#rfc.section.6">6.</a> FEC for Application Content</h1>
+<p id="rfc.section.6.p.1">WebRTC also supports the ability to send generic application data, and provides transport-level retransmission mechanisms to support full and partial (e.g. timed) reliability. See <a href="#I-D.ietf-rtcweb-data-channel" class="xref">[I-D.ietf-rtcweb-data-channel]</a> for details.</p>
+<p id="rfc.section.6.p.2">Because the application can control exactly what data to send, it has the ability to monitor packet statistics and perform its own application-level FEC, if necessary.</p>
+<p id="rfc.section.6.p.3">As a result, this document makes no recommendations regarding FEC for the underlying data transport.</p>
+<h1 id="rfc.section.7">
+<a href="#rfc.section.7">7.</a> Implementation Requirements</h1>
+<p id="rfc.section.7.p.1">To support the functionality recommended above, implementations MUST be able to receive and make use of the relevant FEC formats for their supported audio codecs, and MUST indicate this support, as described in <a href="#audio-fec" class="xref">Section 4</a>. Use of these formats when sending, as mentioned above, is RECOMMENDED.</p>
+<p id="rfc.section.7.p.2">The general FEC mechanism described in <a href="#I-D.ietf-payload-flexible-fec-scheme" class="xref">[I-D.ietf-payload-flexible-fec-scheme]</a> SHOULD also be supported, as mentioned in <a href="#video-fec" class="xref">Section 5</a>.</p>
+<p id="rfc.section.7.p.3">Implementations MAY support additional FEC mechanisms if desired, e.g., <a href="#RFC5109" class="xref">[RFC5109]</a>.</p>
+<h1 id="rfc.section.8">
+<a href="#rfc.section.8">8.</a> <a href="#adaptive-fec" id="adaptive-fec">Adaptive Use of FEC</a>
+</h1>
+<p id="rfc.section.8.p.1">Because use of FEC always causes redundant data to be transmitted, and the total amount of data must remain within any bandwidth limits indicated by congestion control and the receiver, this will lead to less bandwidth available for the primary encoding, even when the redundant data is not being used. This is in contrast to methods like RTX <a href="#RFC4588" class="xref">[RFC4588]</a> or flexfec's retransmission mode ( <a href="#I-D.ietf-payload-flexible-fec-scheme" class="xref">[I-D.ietf-payload-flexible-fec-scheme]</a>, Section 1.1.7), which only transmit redundant data when necessary, at the cost of an extra roundtrip.</p>
+<p id="rfc.section.8.p.2">Given this, WebRTC implementations SHOULD consider using RTX or flexfec retransmissions instead of FEC when RTT is low, and SHOULD only transmit the amount of FEC needed to protect against the observed packet loss (which can be determined, e.g., by monitoring transmit packet loss data from RTCP Receiver Reports <a href="#RFC3550" class="xref">[RFC3550]</a>), unless the application indicates it is willing to pay a quality penalty to proactively avoid losses.</p>
+<p id="rfc.section.8.p.3">Note that when probing bandwidth, i.e., speculatively sending extra data to determine if additional link capacity exists, FEC SHOULD be used in all cases. Given that extra data is going to be sent regardless, it makes sense to have that data protect the primary payload; in addition, FEC can be applied in a way that increases bandwidth only modestly, which is necessary when probing.</p>
+<p id="rfc.section.8.p.4">When using FEC with layered codecs, e.g., <a href="#RFC6386" class="xref">[RFC6386]</a>, where only base layer frames are critical to the decoding of future frames, implementations SHOULD only apply FEC to these base layer frames.</p>
+<p id="rfc.section.8.p.5">Finally, it should be noted that although applying redundancy is often useful in protecting a stream against packet loss, if the loss is caused by network congestion, the additional bandwidth used by the redundant data may actually make the situation worse, and can lead to significant degradation of the network.</p>
+<h1 id="rfc.section.9">
+<a href="#rfc.section.9">9.</a> Security Considerations</h1>
+<p id="rfc.section.9.p.1">In the WebRTC context, FEC is specifically concerned with recovering data from lost packets; any corrupted packets will be discarded by the SRTP <a href="#RFC3711" class="xref">[RFC3711]</a> decryption process. Therefore, as described in <a href="#RFC3711" class="xref">[RFC3711]</a>, Section 10, the default processing when using FEC with SRTP is to perform FEC followed by SRTP at the sender, and SRTP followed by FEC at the receiver. This ordering is used for all the SRTP Protection Profiles used in DTLS-SRTP <a href="#RFC5763" class="xref">[RFC5763]</a>, which are enumerated in <a href="#RFC5764" class="xref">[RFC5764]</a>, Section 4.1.2.</p>
+<p id="rfc.section.9.p.2">Additional security considerations for each individual FEC mechanism are enumerated in their respective documents.</p>
+<h1 id="rfc.section.10">
+<a href="#rfc.section.10">10.</a> IANA Considerations</h1>
+<p id="rfc.section.10.p.1">This document requires no actions from IANA.</p>
+<h1 id="rfc.section.11">
+<a href="#rfc.section.11">11.</a> Acknowledgements</h1>
+<p id="rfc.section.11.p.1">Several people provided significant input into this document, including Bernard Aboba, Jonathan Lennox, Giri Mandyam, Varun Singh, Tim Terriberry, Magnus Westerlund, and Mo Zanaty.</p>
+<h1 id="rfc.references">
+<a href="#rfc.references">12.</a> References</h1>
+<h1 id="rfc.references.1">
+<a href="#rfc.references.1">12.1.</a> Normative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="I-D.ietf-payload-flexible-fec-scheme">[I-D.ietf-payload-flexible-fec-scheme]</b></td>
+<td class="top">
+<a>Zanaty, M.</a>, <a>Singh, V.</a>, <a>Begen, A.</a> and <a>G. Mandyam</a>, "<a href="https://tools.ietf.org/html/draft-ietf-payload-flexible-fec-scheme-20">RTP Payload Format for Flexible Forward Error Correction (FEC)</a>", Internet-Draft draft-ietf-payload-flexible-fec-scheme-20, May 2019.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+<td class="top">
+<a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2198">[RFC2198]</b></td>
+<td class="top">
+<a>Perkins, C.</a>, <a>Kouvelas, I.</a>, <a>Hodson, O.</a>, <a>Hardman, V.</a>, <a>Handley, M.</a>, <a>Bolot, J.</a>, <a>Vega-Garcia, A.</a> and <a>S. Fosse-Parisis</a>, "<a href="https://tools.ietf.org/html/rfc2198">RTP Payload for Redundant Audio Data</a>", RFC 2198, DOI 10.17487/RFC2198, September 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC3264">[RFC3264]</b></td>
+<td class="top">
+<a>Rosenberg, J.</a> and <a>H. Schulzrinne</a>, "<a href="https://tools.ietf.org/html/rfc3264">An Offer/Answer Model with Session Description Protocol (SDP)</a>", RFC 3264, DOI 10.17487/RFC3264, June 2002.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4867">[RFC4867]</b></td>
+<td class="top">
+<a>Sjoberg, J.</a>, <a>Westerlund, M.</a>, <a>Lakaniemi, A.</a> and <a>Q. Xie</a>, "<a href="https://tools.ietf.org/html/rfc4867">RTP Payload Format and File Storage Format for the Adaptive Multi-Rate (AMR) and Adaptive Multi-Rate Wideband (AMR-WB) Audio Codecs</a>", RFC 4867, DOI 10.17487/RFC4867, April 2007.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5956">[RFC5956]</b></td>
+<td class="top">
+<a>Begen, A.</a>, "<a href="https://tools.ietf.org/html/rfc5956">Forward Error Correction Grouping Semantics in the Session Description Protocol</a>", RFC 5956, DOI 10.17487/RFC5956, September 2010.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7587">[RFC7587]</b></td>
+<td class="top">
+<a>Spittka, J.</a>, <a>Vos, K.</a> and <a>JM. Valin</a>, "<a href="https://tools.ietf.org/html/rfc7587">RTP Payload Format for the Opus Speech and Audio Codec</a>", RFC 7587, DOI 10.17487/RFC7587, June 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8174">[RFC8174]</b></td>
+<td class="top">
+<a>Leiba, B.</a>, "<a href="https://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="TS.26114">[TS.26114]</b></td>
+<td class="top">
+<a>3GPP</a>, "<a>IP Multimedia Subsystem (IMS); Multimedia telephony; Media handling and interaction</a>", 3GPP TS 26.114 15.0.0, September 2017.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.references.2">
+<a href="#rfc.references.2">12.2.</a> Informative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="I-D.ietf-mmusic-sdp-bundle-negotiation">[I-D.ietf-mmusic-sdp-bundle-negotiation]</b></td>
+<td class="top">
+<a>Holmberg, C.</a>, <a>Alvestrand, H.</a> and <a>C. Jennings</a>, "<a href="https://tools.ietf.org/html/draft-ietf-mmusic-sdp-bundle-negotiation-54">Negotiating Media Multiplexing Using the Session Description Protocol (SDP)</a>", Internet-Draft draft-ietf-mmusic-sdp-bundle-negotiation-54, December 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="I-D.ietf-rtcweb-data-channel">[I-D.ietf-rtcweb-data-channel]</b></td>
+<td class="top">
+<a>Jesup, R.</a>, <a>Loreto, S.</a> and <a>M. Tuexen</a>, "<a href="https://tools.ietf.org/html/draft-ietf-rtcweb-data-channel-13">WebRTC Data Channels</a>", Internet-Draft draft-ietf-rtcweb-data-channel-13, January 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="OpusFEC">[OpusFEC]</b></td>
+<td class="top">
+<a>Xiph</a>, "<a>Opus FEC&gt;</a>", January 2013.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC3550">[RFC3550]</b></td>
+<td class="top">
+<a>Schulzrinne, H.</a>, <a>Casner, S.</a>, <a>Frederick, R.</a> and <a>V. Jacobson</a>, "<a href="https://tools.ietf.org/html/rfc3550">RTP: A Transport Protocol for Real-Time Applications</a>", STD 64, RFC 3550, DOI 10.17487/RFC3550, July 2003.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC3711">[RFC3711]</b></td>
+<td class="top">
+<a>Baugher, M.</a>, <a>McGrew, D.</a>, <a>Naslund, M.</a>, <a>Carrara, E.</a> and <a>K. Norrman</a>, "<a href="https://tools.ietf.org/html/rfc3711">The Secure Real-time Transport Protocol (SRTP)</a>", RFC 3711, DOI 10.17487/RFC3711, March 2004.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4588">[RFC4588]</b></td>
+<td class="top">
+<a>Rey, J.</a>, <a>Leon, D.</a>, <a>Miyazaki, A.</a>, <a>Varsa, V.</a> and <a>R. Hakenberg</a>, "<a href="https://tools.ietf.org/html/rfc4588">RTP Retransmission Payload Format</a>", RFC 4588, DOI 10.17487/RFC4588, July 2006.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5109">[RFC5109]</b></td>
+<td class="top">
+<a>Li, A.</a>, "<a href="https://tools.ietf.org/html/rfc5109">RTP Payload Format for Generic Forward Error Correction</a>", RFC 5109, DOI 10.17487/RFC5109, December 2007.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5391">[RFC5391]</b></td>
+<td class="top">
+<a>Sollaud, A.</a>, "<a href="https://tools.ietf.org/html/rfc5391">RTP Payload Format for ITU-T Recommendation G.711.1</a>", RFC 5391, DOI 10.17487/RFC5391, November 2008.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5763">[RFC5763]</b></td>
+<td class="top">
+<a>Fischl, J.</a>, <a>Tschofenig, H.</a> and <a>E. Rescorla</a>, "<a href="https://tools.ietf.org/html/rfc5763">Framework for Establishing a Secure Real-time Transport Protocol (SRTP) Security Context Using Datagram Transport Layer Security (DTLS)</a>", RFC 5763, DOI 10.17487/RFC5763, May 2010.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5764">[RFC5764]</b></td>
+<td class="top">
+<a>McGrew, D.</a> and <a>E. Rescorla</a>, "<a href="https://tools.ietf.org/html/rfc5764">Datagram Transport Layer Security (DTLS) Extension to Establish Keys for the Secure Real-time Transport Protocol (SRTP)</a>", RFC 5764, DOI 10.17487/RFC5764, May 2010.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6386">[RFC6386]</b></td>
+<td class="top">
+<a>Bankoski, J.</a>, <a>Koleszar, J.</a>, <a>Quillio, L.</a>, <a>Salonen, J.</a>, <a>Wilkins, P.</a> and <a>Y. Xu</a>, "<a href="https://tools.ietf.org/html/rfc6386">VP8 Data Format and Decoding Guide</a>", RFC 6386, DOI 10.17487/RFC6386, November 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6464">[RFC6464]</b></td>
+<td class="top">
+<a>Lennox, J.</a>, <a>Ivov, E.</a> and <a>E. Marocco</a>, "<a href="https://tools.ietf.org/html/rfc6464">A Real-time Transport Protocol (RTP) Header Extension for Client-to-Mixer Audio Level Indication</a>", RFC 6464, DOI 10.17487/RFC6464, December 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6465">[RFC6465]</b></td>
+<td class="top">
+<a>Ivov, E.</a>, <a>Marocco, E.</a> and <a>J. Lennox</a>, "<a href="https://tools.ietf.org/html/rfc6465">A Real-time Transport Protocol (RTP) Header Extension for Mixer-to-Client Audio Level Indication</a>", RFC 6465, DOI 10.17487/RFC6465, December 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6716">[RFC6716]</b></td>
+<td class="top">
+<a>Valin, JM.</a>, <a>Vos, K.</a> and <a>T. Terriberry</a>, "<a href="https://tools.ietf.org/html/rfc6716">Definition of the Opus Audio Codec</a>", RFC 6716, DOI 10.17487/RFC6716, September 2012.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.appendix.A">
+<a href="#rfc.appendix.A">Appendix A.</a> Change log</h1>
+<p id="rfc.section.A.p.1">Changes in draft -10: </p>
+
+<ul>
+<li>Editorial changes from IETF LC.</li>
+<li>Added new reference for Opus FEC.</li>
+</ul>
+<p id="rfc.section.A.p.2">Changes in draft -09: </p>
+
+<ul><li>Editorial changes.</li></ul>
+<p id="rfc.section.A.p.3">Changes in draft -08: </p>
+
+<ul><li>Switch to RFC 8174 boilerplate.</li></ul>
+<p id="rfc.section.A.p.4">Changes in draft -07: </p>
+
+<ul>
+<li>Clarify how bandwidth management interacts with FEC.</li>
+<li>Make 3GPP reference normative.</li>
+</ul>
+<p id="rfc.section.A.p.5">Changes in draft -06: </p>
+
+<ul>
+<li>Discuss how multiple streams can be protected by a single FlexFEC stream.</li>
+<li>Discuss FEC for bandwidth probing.</li>
+<li>Add note about recovery of RTP headers and header extensions.</li>
+<li>Add note about FEC/SRTP ordering.</li>
+<li>Clarify flexfec demux text, and mention retransmits.</li>
+<li>Clarify text regarding offers/answers.</li>
+<li>Make RFC2198 support SHOULD strength.</li>
+<li>Clean up references.</li>
+</ul>
+<p id="rfc.section.A.p.6">Changes in draft -05: </p>
+
+<ul><li>No changes.</li></ul>
+<p id="rfc.section.A.p.7">Changes in draft -04: </p>
+
+<ul>
+<li>Discussion of layered codecs.</li>
+<li>Discussion of RTX.</li>
+<li>Clarified implementation requirements.</li>
+<li>FlexFEC MUST -&gt; SHOULD.</li>
+<li>Clarified AMR max-red handling.</li>
+<li>Updated references.</li>
+</ul>
+<p id="rfc.section.A.p.8">Changes in draft -03: </p>
+
+<ul>
+<li>Added overhead stats for Opus.</li>
+<li>Expanded discussion of multi-packet FEC for Opus.</li>
+<li>Added discussion of AMR/AMR-WB.</li>
+<li>Removed discussion of ssrc-group.</li>
+<li>Referenced the data channel doc.</li>
+<li>Referenced the RTP/RTCP RFC.</li>
+<li>Several small edits based on feedback from Magnus.</li>
+</ul>
+<p id="rfc.section.A.p.9">Changes in draft -02: </p>
+
+<ul><li>Expanded discussion of FEC-only m-lines, and how they should be handled in offers and answers.</li></ul>
+<p id="rfc.section.A.p.10">Changes in draft -01: </p>
+
+<ul>
+<li>Tweaked abstract/intro text that was ambiguously normative.</li>
+<li>Removed text on FEC for Opus in CELT mode.</li>
+<li>Changed RFC 2198 recommendation for PCMU to be MAY instead of NOT RECOMMENDED, based on list feedback.</li>
+<li>Explicitly called out application data as something not addressed in this document.</li>
+<li>Updated flexible-fec reference.</li>
+</ul>
+<p id="rfc.section.A.p.11">Changes in draft -00: </p>
+
+<ul><li>Initial version, from sidebar conversation at IETF 90.</li></ul>
+<h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Justin Uberti</span> 
+	  <span class="n hidden">
+		<span class="family-name">Uberti</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Google</span>
+	<span class="adr">
+	  <span class="vcardline">747 6th St S</span>
+
+	  <span class="vcardline">
+		<span class="locality">Kirkland</span>,  
+		<span class="region">WA</span> 
+		<span class="code">98033</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:justin@uberti.name">justin@uberti.name</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
