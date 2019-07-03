@@ -392,7 +392,7 @@
           </author>
           <date day="28" month="January" year="2013" />
         </front>
-        <format
+        <format type="HTML"
         target="http://lists.xiph.org/pipermail/opus/2013-January/001904.html" />
       </reference>
     </references>
