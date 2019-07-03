@@ -287,8 +287,8 @@
       by congestion control and the receiver, this will lead to less bandwidth
       available for the primary encoding, even when the redundant data is not
       being used. This is in contrast to methods like RTX
-      <xref target="RFC4588" /> or flexfec
-      <xref target="I-D.ietf-payload-flexible-fec-scheme" /> retransmissions,
+      <xref target="RFC4588" /> or flexfec's retransmission mode (
+      <xref target="I-D.ietf-payload-flexible-fec-scheme" />, Section 1.1.7),
       which only transmit redundant data when necessary, at the cost of an
       extra roundtrip.</t>
 
