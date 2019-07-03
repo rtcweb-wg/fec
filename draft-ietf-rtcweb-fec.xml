@@ -10,7 +10,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-ietf-rtcweb-fec-09" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-rtcweb-fec-10" ipr="trust200902">
   <front>
     <title abbrev="WebRTC FEC">WebRTC Forward Error Correction
     Requirements</title>
@@ -27,7 +27,7 @@
         <email>justin@uberti.name</email>
       </address>
     </author>
-    <date day="8" month="Feb" year="2019" />
+    <date day="3" month="Jul" year="2019" />
     <area>RAI</area>
     <abstract>
 
@@ -397,7 +397,13 @@
       </reference>
     </references>
     <section title="Change log">
-       <t>Changes in draft -09:
+      <t>Changes in draft -10:
+      <list style="symbols">
+        <t>Editorial changes from IETF LC.</t>
+        <t>Added new reference for Opus FEC.</t>
+      </list></t>
+
+      <t>Changes in draft -09:
       <list style="symbols">
         <t>Editorial changes.</t>
       </list></t>
