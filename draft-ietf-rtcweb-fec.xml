@@ -78,10 +78,10 @@
         <t>This approach, as described in
         <xref target="RFC2198" />, allows for redundant data to be piggybacked
         on an existing primary encoding, all in a single packet. This redundant
-        data may be an exact copy of a previous packet, or for codecs that
+        data may be an exact copy of a previous payload, or for codecs that
         support variable-bitrate encodings, possibly a smaller, lower-quality
         representation. In certain cases, the redundant data could include
-        multiple prior packets.</t>
+        encodings of multiple prior audio frames.</t>
 
         <t>Since there is only a single set of packet headers, this approach
         allows for a very efficient representation of primary + redundant data.
@@ -99,23 +99,23 @@
         <t>Some audio codecs, notably Opus
         <xref target="RFC6716" /> and AMR
         <xref target="RFC4867" />, support their own in-band FEC mechanism,
-        where redundant data is included in the codec payload.</t>
+        where redundant data is included in the codec payload. This is similar
+        to the redundant encoding mechanism described above, but as it adds no
+        additional framing, it can be slightly more efficient.</t>
 
-        <t>For Opus, packets deemed as important are re-encoded at a lower
-        bitrate and added to the subsequent packet, allowing partial recovery
+        <t>For Opus, audio frames deemed important are re-encoded at a lower
+        bitrate and appended to the next payload, allowing partial recovery
         of a lost packet. This scheme is fairly efficient; experiments
         performed indicate that when Opus FEC is used, the overhead imposed is
-        about 20-30%, depending on the amount of protection needed. Note that
-        this mechanism can only carry redundancy information for the
-        immediately preceding packet; as such the decoder cannot fully recover
+        only about 20-30%, depending on the amount of protection needed. Note
+        that this mechanism can only carry redundancy information for the
+        immediately preceding audio frame; as such the decoder cannot fully recover
         multiple consecutive lost packets, which can be a problem on wireless
         networks. See
         <xref target="RFC6716" />, Section 2.1.7 for complete details.</t>
 
         <t>For AMR/AMR-WB, packets can contain copies or lower-quality
-        encodings of multiple prior audio frames. This mechanism is similar to
-        the redundant encoding mechanism described above, but as it adds no
-        additional framing, it can be slightly more efficient. See
+        encodings of multiple prior audio frames. See
         <xref target="RFC4867" />, Section 3.7.1 for details on this
         mechanism.</t>
 
@@ -229,7 +229,7 @@
         <t>Support for a SSRC-multiplexed flexfec stream to protect a given RTP
         stream SHOULD be indicated by including one of the formats described in
 
-        <xref target="I-D.ietf-payload-flexible-fec-scheme" />, Section 5.1, as
+        <xref target="I-D.ietf-payload-flexible-fec-scheme" />, Section 5.1.2, as
         an additional supported media type for the associated m= section in the
         SDP offer
         <xref target="RFC3264" />. As mentioned above, when BUNDLE is used,
