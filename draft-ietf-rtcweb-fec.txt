@@ -9,7 +9,7 @@ Expires: January 4, 2020
 
 
               WebRTC Forward Error Correction Requirements
-                        draft-ietf-rtcweb-fec-10
+                        draft-ietf-rtcweb-fec-09
 
 Abstract
 
@@ -493,7 +493,7 @@ Internet-Draft                 WebRTC FEC                       Jul 2019
               Channels", draft-ietf-rtcweb-data-channel-13 (work in
               progress), January 2015.
 
-   [OpusFEC]  Xiph, "Opus FEC>", January 2013.
+   [OpusFEC]  Terriberry, T., "Opus FEC", January 2013.
 
 
 
@@ -574,15 +574,11 @@ Internet-Draft                 WebRTC FEC                       Jul 2019
 
 Appendix A.  Change log
 
-   Changes in draft -10:
+   Changes in draft -09:
 
    o  Editorial changes from IETF LC.
 
    o  Added new reference for Opus FEC.
-
-   Changes in draft -09:
-
-   o  Editorial changes.
 
    Changes in draft -08:
 
@@ -611,16 +607,16 @@ Appendix A.  Change log
 
    o  Make RFC2198 support SHOULD strength.
 
+   o  Clean up references.
+
+   Changes in draft -05:
+
 
 
 Uberti                   Expires January 4, 2020               [Page 11]
 
 Internet-Draft                 WebRTC FEC                       Jul 2019
 
-
-   o  Clean up references.
-
-   Changes in draft -05:
 
    o  No changes.
 
@@ -665,7 +661,11 @@ Internet-Draft                 WebRTC FEC                       Jul 2019
 
    o  Removed text on FEC for Opus in CELT mode.
 
+   o  Changed RFC 2198 recommendation for PCMU to be MAY instead of NOT
+      RECOMMENDED, based on list feedback.
 
+   o  Explicitly called out application data as something not addressed
+      in this document.
 
 
 
@@ -673,12 +673,6 @@ Uberti                   Expires January 4, 2020               [Page 12]
 
 Internet-Draft                 WebRTC FEC                       Jul 2019
 
-
-   o  Changed RFC 2198 recommendation for PCMU to be MAY instead of NOT
-      RECOMMENDED, based on list feedback.
-
-   o  Explicitly called out application data as something not addressed
-      in this document.
 
    o  Updated flexible-fec reference.
 
@@ -695,6 +689,12 @@ Author's Address
    USA
 
    Email: justin@uberti.name
+
+
+
+
+
+
 
 
 

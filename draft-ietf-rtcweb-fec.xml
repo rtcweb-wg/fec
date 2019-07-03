@@ -386,8 +386,8 @@
       <?rfc include='reference.I-D.ietf-rtcweb-data-channel'?>
       <reference anchor="OpusFEC">
         <front>
-          <title>Opus FEC></title>
-          <author fullname="Tim Terriberry">
+          <title>Opus FEC</title>
+          <author fullname="Tim Terriberry" initials="T." surname="Terriberry">
             <organization>Xiph</organization>
           </author>
           <date day="28" month="January" year="2013" />
