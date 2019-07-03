@@ -390,7 +390,7 @@
           <author fullname="Tim Terriberry">
             <organization>Xiph</organization>
           </author>
-          <date date="28" month="January" year="2013" />
+          <date day="28" month="January" year="2013" />
         </front>
         <format
         target="http://lists.xiph.org/pipermail/opus/2013-January/001904.html" />
