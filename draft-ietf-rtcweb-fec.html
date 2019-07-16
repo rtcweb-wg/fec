@@ -403,8 +403,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Uberti, J." />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-rtcweb-fec-09" />
-  <meta name="dct.issued" scheme="ISO8601" content="2019-03" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-rtcweb-fec-10" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-16" />
   <meta name="dct.abstract" content="This document provides information and requirements for how Forward Error Correction (FEC) should be used by WebRTC implementations." />
   <meta name="description" content="This document provides information and requirements for how Forward Error Correction (FEC) should be used by WebRTC implementations." />
 
@@ -425,10 +425,10 @@
 </tr>
 <tr>
 <td class="left">Intended status: Standards Track</td>
-<td class="right">Jul 3, 2019</td>
+<td class="right">Jul 16, 2019</td>
 </tr>
 <tr>
-<td class="left">Expires: January 4, 2020</td>
+<td class="left">Expires: January 17, 2020</td>
 <td class="right"></td>
 </tr>
 
@@ -437,7 +437,7 @@
   </table>
 
   <p class="title">WebRTC Forward Error Correction Requirements<br />
-  <span class="filename">draft-ietf-rtcweb-fec-09</span></p>
+  <span class="filename">draft-ietf-rtcweb-fec-10</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
 <p>This document provides information and requirements for how Forward Error Correction (FEC) should be used by WebRTC implementations.</p>
@@ -445,7 +445,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 4, 2020.</p>
+<p>This Internet-Draft will expire on January 17, 2020.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -575,9 +575,9 @@
 <h1 id="rfc.section.8">
 <a href="#rfc.section.8">8.</a> <a href="#adaptive-fec" id="adaptive-fec">Adaptive Use of FEC</a>
 </h1>
-<p id="rfc.section.8.p.1">Because use of FEC always causes redundant data to be transmitted, and the total amount of data must remain within any bandwidth limits indicated by congestion control and the receiver, this will lead to less bandwidth available for the primary encoding, even when the redundant data is not being used. This is in contrast to methods like RTX <a href="#RFC4588" class="xref">[RFC4588]</a> or flexfec's retransmission mode ( <a href="#I-D.ietf-payload-flexible-fec-scheme" class="xref">[I-D.ietf-payload-flexible-fec-scheme]</a>, Section 1.1.7), which only transmit redundant data when necessary, at the cost of an extra roundtrip.</p>
-<p id="rfc.section.8.p.2">Given this, WebRTC implementations SHOULD consider using RTX or flexfec retransmissions instead of FEC when RTT is low, and SHOULD only transmit the amount of FEC needed to protect against the observed packet loss (which can be determined, e.g., by monitoring transmit packet loss data from RTCP Receiver Reports <a href="#RFC3550" class="xref">[RFC3550]</a>), unless the application indicates it is willing to pay a quality penalty to proactively avoid losses.</p>
-<p id="rfc.section.8.p.3">Note that when probing bandwidth, i.e., speculatively sending extra data to determine if additional link capacity exists, FEC SHOULD be used in all cases. Given that extra data is going to be sent regardless, it makes sense to have that data protect the primary payload; in addition, FEC can be applied in a way that increases bandwidth only modestly, which is necessary when probing.</p>
+<p id="rfc.section.8.p.1">Because use of FEC always causes redundant data to be transmitted, and the total amount of data must remain within any bandwidth limits indicated by congestion control and the receiver, this will lead to less bandwidth available for the primary encoding, even when the redundant data is not being used. This is in contrast to methods like RTX <a href="#RFC4588" class="xref">[RFC4588]</a> or flexfec's retransmission mode ( <a href="#I-D.ietf-payload-flexible-fec-scheme" class="xref">[I-D.ietf-payload-flexible-fec-scheme]</a>, Section 1.1.7), which only transmit redundant data when necessary, at the cost of an extra roundtrip and thereby increased media latency.</p>
+<p id="rfc.section.8.p.2">Given this, WebRTC implementations SHOULD prefer using RTX or flexfec retransmissions instead of FEC when the connection RTT is within the application's latency budget, and otherwise SHOULD only transmit the amount of FEC needed to protect against the observed packet loss (which can be determined, e.g., by monitoring transmit packet loss data from RTCP Receiver Reports <a href="#RFC3550" class="xref">[RFC3550]</a>), unless the application indicates it is willing to pay a quality penalty to proactively avoid losses.</p>
+<p id="rfc.section.8.p.3">Note that when probing bandwidth, i.e., speculatively sending extra data to determine if additional link capacity exists, FEC data SHOULD be used as the additional data. Given that extra data is going to be sent regardless, it makes sense to have that data protect the primary payload; in addition, FEC can typically be applied in a way that increases bandwidth only modestly, which is necessary when probing.</p>
 <p id="rfc.section.8.p.4">When using FEC with layered codecs, e.g., <a href="#RFC6386" class="xref">[RFC6386]</a>, where only base layer frames are critical to the decoding of future frames, implementations SHOULD only apply FEC to these base layer frames.</p>
 <p id="rfc.section.8.p.5">Finally, it should be noted that although applying redundancy is often useful in protecting a stream against packet loss, if the loss is caused by network congestion, the additional bandwidth used by the redundant data may actually make the situation worse, and can lead to significant degradation of the network.</p>
 <h1 id="rfc.section.9">
@@ -717,22 +717,25 @@
 </tbody></table>
 <h1 id="rfc.appendix.A">
 <a href="#rfc.appendix.A">Appendix A.</a> Change log</h1>
-<p id="rfc.section.A.p.1">Changes in draft -09: </p>
+<p id="rfc.section.A.p.1">Changes in draft -10: </p>
+
+<ul><li>Additional editorial changes from IETF LC.</li></ul>
+<p id="rfc.section.A.p.2">Changes in draft -09: </p>
 
 <ul>
 <li>Editorial changes from IETF LC.</li>
 <li>Added new reference for Opus FEC.</li>
 </ul>
-<p id="rfc.section.A.p.2">Changes in draft -08: </p>
+<p id="rfc.section.A.p.3">Changes in draft -08: </p>
 
 <ul><li>Switch to RFC 8174 boilerplate.</li></ul>
-<p id="rfc.section.A.p.3">Changes in draft -07: </p>
+<p id="rfc.section.A.p.4">Changes in draft -07: </p>
 
 <ul>
 <li>Clarify how bandwidth management interacts with FEC.</li>
 <li>Make 3GPP reference normative.</li>
 </ul>
-<p id="rfc.section.A.p.4">Changes in draft -06: </p>
+<p id="rfc.section.A.p.5">Changes in draft -06: </p>
 
 <ul>
 <li>Discuss how multiple streams can be protected by a single FlexFEC stream.</li>
@@ -744,10 +747,10 @@
 <li>Make RFC2198 support SHOULD strength.</li>
 <li>Clean up references.</li>
 </ul>
-<p id="rfc.section.A.p.5">Changes in draft -05: </p>
+<p id="rfc.section.A.p.6">Changes in draft -05: </p>
 
 <ul><li>No changes.</li></ul>
-<p id="rfc.section.A.p.6">Changes in draft -04: </p>
+<p id="rfc.section.A.p.7">Changes in draft -04: </p>
 
 <ul>
 <li>Discussion of layered codecs.</li>
@@ -757,7 +760,7 @@
 <li>Clarified AMR max-red handling.</li>
 <li>Updated references.</li>
 </ul>
-<p id="rfc.section.A.p.7">Changes in draft -03: </p>
+<p id="rfc.section.A.p.8">Changes in draft -03: </p>
 
 <ul>
 <li>Added overhead stats for Opus.</li>
@@ -768,10 +771,10 @@
 <li>Referenced the RTP/RTCP RFC.</li>
 <li>Several small edits based on feedback from Magnus.</li>
 </ul>
-<p id="rfc.section.A.p.8">Changes in draft -02: </p>
+<p id="rfc.section.A.p.9">Changes in draft -02: </p>
 
 <ul><li>Expanded discussion of FEC-only m-lines, and how they should be handled in offers and answers.</li></ul>
-<p id="rfc.section.A.p.9">Changes in draft -01: </p>
+<p id="rfc.section.A.p.10">Changes in draft -01: </p>
 
 <ul>
 <li>Tweaked abstract/intro text that was ambiguously normative.</li>
@@ -780,7 +783,7 @@
 <li>Explicitly called out application data as something not addressed in this document.</li>
 <li>Updated flexible-fec reference.</li>
 </ul>
-<p id="rfc.section.A.p.10">Changes in draft -00: </p>
+<p id="rfc.section.A.p.11">Changes in draft -00: </p>
 
 <ul><li>Initial version, from sidebar conversation at IETF 90.</li></ul>
 <h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
