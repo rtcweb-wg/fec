@@ -292,10 +292,11 @@
       <xref target="RFC4588" /> or flexfec's retransmission mode (
       <xref target="I-D.ietf-payload-flexible-fec-scheme" />, Section 1.1.7),
       which only transmit redundant data when necessary, at the cost of an
-      extra roundtrip.</t>
+      extra roundtrip and thereby increased media latency.</t>
 
-      <t>Given this, WebRTC implementations SHOULD consider using RTX or
-      flexfec retransmissions instead of FEC when RTT is low, and SHOULD only
+      <t>Given this, WebRTC implementations SHOULD prefer using RTX or
+      flexfec retransmissions instead of FEC when the connection RTT is within
+      the application's latency budget, and otherwise SHOULD only
       transmit the amount of FEC needed to protect against the observed packet
       loss (which can be determined, e.g., by monitoring transmit packet loss
       data from RTCP Receiver Reports
@@ -303,11 +304,11 @@
       willing to pay a quality penalty to proactively avoid losses.</t>
 
       <t>Note that when probing bandwidth, i.e., speculatively sending extra
-      data to determine if additional link capacity exists, FEC SHOULD be used
-      in all cases. Given that extra data is going to be sent regardless, it
-      makes sense to have that data protect the primary payload; in addition,
-      FEC can be applied in a way that increases bandwidth only modestly, which
-      is necessary when probing.</t>
+      data to determine if additional link capacity exists, FEC data SHOULD be
+      used as the additional data. Given that extra data is going to be sent
+      regardless, it makes sense to have that data protect the primary payload;
+      in addition, FEC can typically be applied in a way that increases
+      bandwidth only modestly, which is necessary when probing.</t>
 
       <t>When using FEC with layered codecs, e.g.,
       <xref target="RFC6386" />, where only base layer frames are critical to
